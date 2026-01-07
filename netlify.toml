@@ -4,7 +4,7 @@
   functions = ".next/functions"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20.14.0"
   NPM_FLAGS = "--legacy-peer-deps"
   NEXT_TELEMETRY_DISABLED = "1"
 
