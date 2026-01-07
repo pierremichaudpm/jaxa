@@ -4,11 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run copy-assets && next build",
+    "build": "next build",
     "start": "next start",
     "copy-assets": "node scripts/copy-assets.js",
-    "dev:with-assets": "npm run copy-assets && next dev",
-    "build:with-assets": "npm run copy-assets && next build"
+    "dev:with-assets": "npm run copy-assets && next dev"
   },
   "dependencies": {
     "next": "16.1.1",
