@@ -4,13 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run copy-assets && next build",
     "start": "next start",
     "copy-assets": "node scripts/copy-assets.js",
     "dev:with-assets": "npm run copy-assets && next dev",
-    "build:with-assets": "npm run copy-assets && next build",
-    "prebuild": "npm run copy-assets",
-    "netlify-build": "npm run copy-assets && next build"
+    "build:with-assets": "npm run copy-assets && next build"
   },
   "dependencies": {
     "next": "16.1.1",

@@ -1,31 +1,48 @@
 [build]
-  command = "npm run netlify-build"
+  command = "npm run build"
   publish = ".next"
+  functions = ".next/functions"
 
 [build.environment]
   NODE_VERSION = "18"
-  NPM_VERSION = "9"
+  NPM_FLAGS = "--legacy-peer-deps"
+  NEXT_TELEMETRY_DISABLED = "1"
 
-# Next.js specific settings
-[functions]
-  directory = ".next/functions"
+# Configuration spécifique pour Netlify
+[context.production.environment]
+  NODE_ENV = "production"
 
-# Redirects for SPA
+# Configuration pour éviter les problèmes de mémoire
+[build.processing]
+  css = { bundle = true, minify = true }
+  js = { bundle = true, minify = true }
+  html = { pretty_urls = true }
+  images = { compress = true }
+
+# Redirections pour SPA
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
-# Security headers
+# Fallback pour les routes non trouvées
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+  conditions = { Status = 404 }
+
+# Headers de sécurité
 [[headers]]
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    X-XSS-Protection = "1; mode=block"
 
-# Caching for static assets
+# Cache pour les assets statiques
 [[headers]]
   for = "/_next/static/*"
   [headers.values]
@@ -35,3 +52,9 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Désactiver la compression pour certains fichiers
+[[headers]]
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
